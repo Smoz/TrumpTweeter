@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tweetinvi;
-using Tweetinvi.Models;
-using Tweetinvi.Parameters;
-using HtmlAgilityPack;
 
 // Objective: Scrape memes/images from r/The_Donald
 // and create tweets out of them to send from the
@@ -45,7 +38,8 @@ namespace TrumpTweeter
             // User authentication happens
             //UserAuthentication();
 
-            ConnectToReddit();
+            var reddit = new Reddit();
+            reddit.ConnectToReddit();
             Console.ReadKey();
         }
 
@@ -66,54 +60,8 @@ namespace TrumpTweeter
             // Once something has been scraped the
             // tweet will be tweeted
 
-            ConnectToReddit();
-        }
-
-        // We'll use this method to connect to the
-        // r/The_Donald subreddit and then call the
-        // ScrapeImage method
-
-        static void ConnectToReddit()
-        {
-            string url = Globals.url;
-            HtmlDocument doc = new HtmlWeb().Load(url);
-            ScrapeImage(doc);
-        }
-
-        // We'll use this method to scrape images/memes
-        // from r/The_Donald and then call the CreateTweet
-        // method
-
-        static void ScrapeImage(HtmlDocument doc)
-        {     
-            var imagesAndMemesUrl = doc.DocumentNode.SelectNodes("//p[@class='title']/a").ToArray();
-            
-            foreach (var imageAndMemeUrl in imagesAndMemesUrl)
-            {
-                Console.WriteLine(imageAndMemeUrl.InnerText);
-                Console.WriteLine(imageAndMemeUrl.Attributes["href"].Value);
-                Console.WriteLine();
-            }
-            Console.ReadKey();
-
-            // CreateTweet();
-        }
-
-        // We'll pass in the scraped images/memes so
-        // this method can build our tweet and then
-        // call the PublishTweet method
-
-        static void CreateTweet()
-        {
-            PublishTweet();
-        }
-
-        // This method will handle the publishing of
-        // the tweets
-
-        static void PublishTweet()
-        {
-            Tweet.PublishTweet("Hello world!");
-        }
+            var reddit = new Reddit();
+            reddit.ConnectToReddit();
+        }   
     }
 }
