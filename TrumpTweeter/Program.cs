@@ -17,7 +17,7 @@ namespace TrumpTweeter
         public static string accessToken = "";
         public static string accessTokenSecret = "";
 
-        public static string url = @"https://www.reddit.com/r/The_Donald/new/";
+        public static string url = @"https://www.reddit.com/r/The_Donald/new/.json";
     }
 
     class Program
