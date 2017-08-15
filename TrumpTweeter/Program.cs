@@ -38,8 +38,8 @@ namespace TrumpTweeter
             // User authentication happens
             UserAuthentication();
 
-            var reddit = new Reddit();
-            reddit.ConnectToReddit();
+            //var reddit = new Reddit();
+            //reddit.ConnectToReddit();
             Console.ReadKey();
         }
 
