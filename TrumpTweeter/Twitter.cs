@@ -1,4 +1,4 @@
-﻿using Tweetinvi;
+using Tweetinvi;
 using System.IO;
 using System;
 using Tweetinvi.Parameters;
@@ -11,9 +11,9 @@ namespace TrumpTweeter
 {
     public class Twitter
     {
-        public void GetHashtags(string hashtags)
+        public string GetHashtags()
         {
-            
+
             string h1 = "#MAGA";
             string h2 = "#TrumpTrain";
             string h3 = "#MakeAmericaGreatAgain";
@@ -24,6 +24,7 @@ namespace TrumpTweeter
             Random randomizeHashtag = new Random();
 
             string randomHashtag = selectableHashtags[randomizeHashtag.Next(0, selectableHashtags.Length)];
+            return randomHashtag;
         }
 
 
@@ -33,15 +34,15 @@ namespace TrumpTweeter
 
         public void PublishTweet(string title, string image)
         {
-            
+
             WebClient wc = new WebClient();
             byte[] bytes = wc.DownloadData(image);
             var media = Upload.UploadImage(bytes);
-            
+
             var tweet = Tweet.PublishTweet(title, new PublishTweetOptionalParameters
             {
                 Medias = { media }
-            });     
+            });
         }
 
     }
