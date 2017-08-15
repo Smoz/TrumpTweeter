@@ -12,10 +12,10 @@ namespace TrumpTweeter
 
     public static class Globals
     {
-        public static string consumerKey = "";
-        public static string consumerSecret = "";
-        public static string accessToken = "";
-        public static string accessTokenSecret = "";
+        public static string consumerKey = "2J78Z9plJmSjpqNEazBPUqWa8";
+        public static string consumerSecret = "t20mxNim4PFDHLfD2EmlLJqYC2ypPfvys5quSXP9RFWhkWMFj9";
+        public static string accessToken = "895911288781639680-SDjYnqMb9zERLaed8WwEtv323yqmmoz";
+        public static string accessTokenSecret = "8PT5lmK8OR67bSr1up2YwJLSMolpXi0mHGnJDc9fOVEcL";
 
         public static string url = @"https://www.reddit.com/r/The_Donald/new/.json";
     }
@@ -36,7 +36,7 @@ namespace TrumpTweeter
             Console.WriteLine("Let's get started. Beep boop boop...");
 
             // User authentication happens
-            //UserAuthentication();
+            UserAuthentication();
 
             var reddit = new Reddit();
             reddit.ConnectToReddit();
@@ -60,8 +60,6 @@ namespace TrumpTweeter
             // Once something has been scraped the
             // tweet will be tweeted
 
-            var reddit = new Reddit();
-            reddit.ConnectToReddit();
-        }   
+        }
     }
 }

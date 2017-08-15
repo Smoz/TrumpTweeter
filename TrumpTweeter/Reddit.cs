@@ -8,6 +8,8 @@ using System.Collections.Generic;
 
 namespace TrumpTweeter
 {
+    #region Reddit Getters and Setters
+
     public class MediaEmbed
     {
         public string content { get; set; }
@@ -193,6 +195,7 @@ namespace TrumpTweeter
         public string kind { get; set; }
         public Data data { get; set; }
     }
+#endregion
 
     public class Reddit
     {
@@ -206,7 +209,6 @@ namespace TrumpTweeter
             RootObject rootObject = JsonConvert.DeserializeObject<RootObject>(redditConnectionJson);
             
             CheckForImages(rootObject);
-            //ScrapeImage(doc);
         }
 
         // We'll use this method to check if there are
@@ -216,7 +218,7 @@ namespace TrumpTweeter
         // of the linked image and proceed to call
         // our ScrapeImage method
 
-        static void CheckForImages(RootObject rootObject)
+        public void CheckForImages(RootObject rootObject)
         {
             var jpg = "jpg";
             var png = "png";
@@ -226,26 +228,19 @@ namespace TrumpTweeter
             {
                 if (item.data.url.Contains(jpg) | item.data.url.Contains(png) | item.data.url.Contains(gif))
                 {
-                    Console.WriteLine("Gotcha Bitch! " + item.data.url);
+                    Console.WriteLine(item.data.title + " " + item.data.url);
+                    Console.WriteLine();
+                                        
+                    var title = item.data.title;
+                    var image = item.data.url;
 
+                    var twitter = new Twitter();
+                    twitter.PublishTweet(title, image);                    
                 }
+                
             }
+            
         }      
-
-        static void ScrapeImage(HtmlDocument doc)
-        {
-            var imagesAndMemesUrl = doc.DocumentNode.SelectNodes("//p[@class='title']/a").ToArray();
-
-            foreach (var imageAndMemeUrl in imagesAndMemesUrl)
-            {
-                Console.WriteLine(imageAndMemeUrl.InnerText);
-                Console.WriteLine(imageAndMemeUrl.Attributes["href"].Value);
-                Console.WriteLine();
-            }
-            Console.ReadKey();
-
-            //var twitter = new Twitter();
-            //twitter.PublishTweet();
-        }
+                
     }
 }
