@@ -38,8 +38,8 @@ namespace TrumpTweeter
             // User authentication happens
             UserAuthentication();
 
-            var reddit = new Reddit();
-            reddit.ConnectToReddit();
+            //var reddit = new Reddit();
+            //reddit.ConnectToReddit();
             Console.ReadKey();
         }
 
@@ -60,6 +60,7 @@ namespace TrumpTweeter
             // Once something has been scraped the
             // tweet will be tweeted
 
+            
         }
     }
 }

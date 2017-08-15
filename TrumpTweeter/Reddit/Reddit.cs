@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using TrumpTweeter.Json;
 
+
 namespace TrumpTweeter
 {
     public class Reddit
