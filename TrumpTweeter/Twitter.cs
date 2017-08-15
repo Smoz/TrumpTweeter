@@ -38,8 +38,9 @@ namespace TrumpTweeter
             WebClient wc = new WebClient();
             byte[] bytes = wc.DownloadData(image);
             var media = Upload.UploadImage(bytes);
+            string hashtag = GetHashtags();
 
-            var tweet = Tweet.PublishTweet(title, new PublishTweetOptionalParameters
+            var tweet = Tweet.PublishTweet(title + " " + hashtag, new PublishTweetOptionalParameters
             {
                 Medias = { media }
             });
