@@ -1,14 +1,17 @@
-﻿using HtmlAgilityPack;
-using Newtonsoft.Json;
+using HtmlAgilityPack;
 using System;
 using System.Linq;
 using System.Net;
+using System.IO;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using TrumpTweeter.Json;
 
 namespace TrumpTweeter
 {
     public class Reddit
     {
+
         // We'll use this method to connect to the
         // r/The_Donald subreddit and then call the
         // ScrapeImage method
@@ -16,7 +19,7 @@ namespace TrumpTweeter
         {
             var redditConnectionJson = new WebClient().DownloadString(Globals.url);
             RootObject rootObject = JsonConvert.DeserializeObject<RootObject>(redditConnectionJson);
-
+            
             CheckForImages(rootObject);
         }
 
@@ -39,24 +42,17 @@ namespace TrumpTweeter
                 {
                     Console.WriteLine(item.data.title + " " + item.data.url);
                     Console.WriteLine();
-
+                                        
                     var title = item.data.title;
                     var image = item.data.url;
 
                     var twitter = new Twitter();
-                    twitter.PublishTweet(title, image);
+                    twitter.PublishTweet(title, image);                    
                 }
-
+                
             }
-
-        }
-
-        public byte[] ImageToBytes(string imageUrl)
-        {
-            var webClient = new WebClient();
-            byte[] imageBytes = webClient.DownloadData(imageUrl);
-
-            return imageBytes;
-        }
+            
+        }      
+                
     }
 }
