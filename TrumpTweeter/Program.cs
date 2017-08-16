@@ -25,7 +25,9 @@ namespace TrumpTweeter
     {
         static void Main(string[] args)
         {
-            Greeting();            
+            var dbconnection = new DbConnection();
+            dbconnection.ConnectingToDb();
+            //Greeting();            
             Console.ReadLine();
         }
 

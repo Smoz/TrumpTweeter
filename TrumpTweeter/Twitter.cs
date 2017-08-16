@@ -40,16 +40,23 @@ namespace TrumpTweeter
 
         public void PublishTweet(string title, string image)
         {
-
-            WebClient wc = new WebClient();
-            byte[] bytes = wc.DownloadData(image);
-            var media = Upload.UploadImage(bytes);
             string hashtag = GetHashtags();
-
-            var tweet = Tweet.PublishTweet(title + " " + hashtag, new PublishTweetOptionalParameters
+            WebClient wc = new WebClient();
+            try
             {
-                Medias = { media }
-            });            
+                byte[] bytes = wc.DownloadData(image);
+                var media = Upload.UploadImage(bytes);
+                var tweet = Tweet.PublishTweet(title + " " + hashtag, new PublishTweetOptionalParameters
+                {
+                    Medias = { media }
+                });
+            }
+            catch(ConnectionAbortedException e)
+            {
+                Console.WriteLine("ConnectionAbortedException: {0}", e.Message);
+                PublishTweet(title, image);
+            }  
+                      
         }
 
     }

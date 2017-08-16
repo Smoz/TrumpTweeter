@@ -32,7 +32,7 @@ namespace TrumpTweeter
         private static int RandomizeRedditTimer()
         {
             Random randomizeMinutes = new Random();
-            int randomMinutes = randomizeMinutes.Next(4, 6);
+            int randomMinutes = randomizeMinutes.Next(15, 30);
 
             return randomMinutes;
         }        

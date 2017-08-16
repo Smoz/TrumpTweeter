@@ -8,5 +8,14 @@ namespace TrumpTweeter
 {
     class CustomExceptions
     {
+        
     }
+
+    public class ConnectionAbortedException : Exception
+    {
+        public ConnectionAbortedException(string message): base(message)
+        {
+        }
+    }
+
 }
