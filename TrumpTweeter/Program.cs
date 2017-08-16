@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using Tweetinvi;
 
 // Objective: Scrape memes/images from r/The_Donald
@@ -24,8 +25,11 @@ namespace TrumpTweeter
     {
         static void Main(string[] args)
         {
-            Greeting();
+            Greeting();            
+            Console.ReadLine();
         }
+
+        
 
         // A nice greeting as well as a central place
         // to call all our methods.
@@ -36,7 +40,7 @@ namespace TrumpTweeter
             Console.WriteLine("Let's get started. Beep boop boop...");
 
             // User authentication happens
-            UserAuthentication();
+            UserAuthentication();            
 
             var reddit = new Reddit();
             reddit.ConnectToReddit();

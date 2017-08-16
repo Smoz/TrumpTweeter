@@ -52,7 +52,10 @@ namespace TrumpTweeter
                 }
                 
             }
-            
+
+            var timer = new ATimer();
+            ATimer.RedditTimer();
+
         }      
                 
     }

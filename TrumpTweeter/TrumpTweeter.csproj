@@ -112,6 +112,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomExceptions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reddit\Json\Child.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Reddit\Json\SecureMediaEmbed.cs" />
     <Compile Include="Reddit\Json\Source.cs" />
     <Compile Include="Reddit\Reddit.cs" />
+    <Compile Include="Reddit\ATimer.cs" />
     <Compile Include="Twitter.cs" />
   </ItemGroup>
   <ItemGroup>
