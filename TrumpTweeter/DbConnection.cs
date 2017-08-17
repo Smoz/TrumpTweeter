@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,55 +31,41 @@ namespace TrumpTweeter
             OpenConnection();
         }
 
-        private bool OpenConnection()
-        {
-            try
+        private void OpenConnection()
+        {          
+            
+            if (connection.State == ConnectionState.Closed)
             {
                 connection.Open();
-                return true;
+                Console.WriteLine("Connected to the database!");
+                Insert();
+                CloseConnection();              
             }
-            catch (MySqlException ex)
+            else if (connection.State == ConnectionState.Closed)
             {
-                switch (ex.Number)
-                {
-                    case 0:
-                        Console.WriteLine("Cannot connect to server. Contact administrator");
-                        break;
-
-                    case 1045:
-                        Console.WriteLine("Invalid username/password, please try again");
-                        break;
-                }
-                return false;
+                Console.WriteLine("Already connected to the database.");
+                Insert();
+                CloseConnection();
             }
         }
-        private bool CloseConnection()
+        private void CloseConnection()
         {
-            try
+            if (connection.State == ConnectionState.Open)
             {
                 connection.Close();
-                return true;
-            }
-            catch(MySqlException ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
             }
         }
 
         public void Insert()
         {            
 
-            string query = "INSERT INTO imageurls(title, url, date) VALUES('test title', 'test url', '123456');";
+            string insert = "INSERT INTO imageurls(post_title, image_url, post_date) VALUES('test title', 'test url', '');";
 
-            if(this.OpenConnection() == true)
+            if(connection.State == ConnectionState.Open)
             {
-                Console.WriteLine("connected");
-                MySqlCommand cmd = new MySqlCommand(query, connection);
-
+                Console.WriteLine("Inserting my data into your table. Giggity!");
+                MySqlCommand cmd = new MySqlCommand(insert, connection);
                 cmd.ExecuteNonQuery();
-
-                this.CloseConnection();
             }
         }
     }

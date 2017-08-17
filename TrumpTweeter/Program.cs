@@ -24,14 +24,10 @@ namespace TrumpTweeter
     class Program
     {
         static void Main(string[] args)
-        {
-            var dbconnection = new DbConnection();
-            dbconnection.ConnectingToDb();
-            //Greeting();            
+        {       
+            Greeting();            
             Console.ReadLine();
-        }
-
-        
+        }        
 
         // A nice greeting as well as a central place
         // to call all our methods.
