@@ -60,13 +60,21 @@ namespace TrumpTweeter
         public void Insert(string title, string image)
         {            
 
-            string insert = "INSERT INTO imageurls(post_title, image_url, post_date) VALUES('"+title.Replace("'", "")+"', '"+image+"', '');";
+            string insert = "INSERT INTO imageurls(post_title, image_url, post_date) VALUES(@post_title,@image_url,@post_date);";
 
             if(connection.State == ConnectionState.Open)
             {
-                Console.WriteLine("Inserting my data into your table. Giggity!");
-                MySqlCommand cmd = new MySqlCommand(insert, connection);
-                cmd.ExecuteNonQuery();
+                //Console.WriteLine("Inserting my data into your table. Giggity!");
+                //MySqlCommand cmd = new MySqlCommand(insert, connection);
+                //cmd.ExecuteNonQuery();
+
+                using (MySqlCommand cmd = new MySqlCommand(insert, connection))
+                {
+                    cmd.Parameters.Add("@post_title", MySqlDbType.String).Value = title.Replace("'", "");
+                    cmd.Parameters.Add("@image_url", MySqlDbType.String).Value = image;
+                    cmd.Parameters.Add("@post_date", MySqlDbType.Date).Value = DateTime.Now;
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
     }
