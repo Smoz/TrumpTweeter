@@ -1,10 +1,6 @@
-using HtmlAgilityPack;
 using System;
-using System.Linq;
 using System.Net;
-using System.IO;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using TrumpTweeter.Json;
 
 
@@ -32,7 +28,7 @@ namespace TrumpTweeter
         // our ScrapeImage method
 
         public void CheckForImages(RootObject rootObject)
-        {
+        {     
             var jpg = "jpg";
             var png = "png";
             var gif = "gif";
@@ -47,16 +43,33 @@ namespace TrumpTweeter
                     var title = item.data.title;
                     var image = item.data.url;
 
+                    ConnectToDatabase(title, image);
+
                     var twitter = new Twitter();
-                    twitter.PublishTweet(title, image);                    
+                    twitter.PublishTweet(title, image);
+                    
                 }
                 
-            }
+            } 
+
+            // Here we create our timer object and
+            // call our method to randomize scraping
+            // and posting tweets
 
             var timer = new ATimer();
-            ATimer.RedditTimer();
+            ATimer.RedditTimer();            
+        }
+        
+        public void ConnectToDatabase(string title, string image)
+        {
+            // Here we create our database connection
+            // object so we can add our titles and image
+            // urls to a mysql database for further
+            // processing and use
 
-        }      
+            DbConnection dbConnection = new DbConnection();
+            dbConnection.ConnectingToDb(title, image);
+        }
                 
     }
 }

@@ -11,10 +11,10 @@ namespace TrumpTweeter
 {
     public class Twitter
     {
-        private const string consumerKey = "";
-        private const string consumerSecret = "";
-        private const string accessToken = "";
-        private const string accessTokenSecret = "";
+        private const string consumerKey = "2J78Z9plJmSjpqNEazBPUqWa8";
+        private const string consumerSecret = "t20mxNim4PFDHLfD2EmlLJqYC2ypPfvys5quSXP9RFWhkWMFj9";
+        private const string accessToken = "895911288781639680-SDjYnqMb9zERLaed8WwEtv323yqmmoz";
+        private const string accessTokenSecret = "8PT5lmK8OR67bSr1up2YwJLSMolpXi0mHGnJDc9fOVEcL";
 
         private int UserAuthentication()
         {

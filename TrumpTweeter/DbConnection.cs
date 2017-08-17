@@ -17,7 +17,7 @@ namespace TrumpTweeter
         private string uid;
         private string password;
         
-        public void ConnectingToDb()
+        public void ConnectingToDb(string title, string image)
         {
             server = "localhost";
             database = "trumptweeterbot";
@@ -28,26 +28,27 @@ namespace TrumpTweeter
             database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
 
             connection = new MySqlConnection(connectionString);
-            OpenConnection();
+            OpenConnection(title, image);
         }
 
-        private void OpenConnection()
-        {          
-            
+        private void OpenConnection(string title, string image)
+        {
+            connection.Open();
             if (connection.State == ConnectionState.Closed)
             {
                 connection.Open();
                 Console.WriteLine("Connected to the database!");
-                Insert();
+                Insert(title, image);
                 CloseConnection();              
             }
             else if (connection.State == ConnectionState.Closed)
             {
                 Console.WriteLine("Already connected to the database.");
-                Insert();
+                Insert(title, image);
                 CloseConnection();
             }
         }
+
         private void CloseConnection()
         {
             if (connection.State == ConnectionState.Open)
@@ -56,10 +57,10 @@ namespace TrumpTweeter
             }
         }
 
-        public void Insert()
+        public void Insert(string title, string image)
         {            
 
-            string insert = "INSERT INTO imageurls(post_title, image_url, post_date) VALUES('test title', 'test url', '');";
+            string insert = "INSERT INTO imageurls(post_title, image_url, post_date) VALUES('"+title.Replace("'", "")+"', '"+image+"', '');";
 
             if(connection.State == ConnectionState.Open)
             {
