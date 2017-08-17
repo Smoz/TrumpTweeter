@@ -41,7 +41,7 @@ namespace TrumpTweeter
                 Insert(title, image);
                 CloseConnection();              
             }
-            else if (connection.State == ConnectionState.Closed)
+            else if (connection.State == ConnectionState.Open)
             {
                 Console.WriteLine("Already connected to the database.");
                 Insert(title, image);

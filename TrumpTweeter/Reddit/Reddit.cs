@@ -12,6 +12,7 @@ namespace TrumpTweeter
         // We'll use this method to connect to the
         // r/The_Donald subreddit and then call the
         // ScrapeImage method
+
         public void ConnectToReddit()
         {
             var redditConnectionJson = new WebClient().DownloadString(Globals.url);
