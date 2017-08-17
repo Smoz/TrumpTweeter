@@ -31,6 +31,12 @@ namespace TrumpTweeter
             return 1;
         }
 
+        // Here is where our hashtags are stored for
+        // the tweets we send out
+        // We've set it so that it will randomly
+        // choose 1 from this pool of 10
+        // hashtags
+
         public string GetHashtags()
         {
 
@@ -62,6 +68,7 @@ namespace TrumpTweeter
             string hashtag = GetHashtags();
 
             // Authenticate user before proceeding
+
             int userAuthentication = UserAuthentication();
             if (userAuthentication == 0)
             {

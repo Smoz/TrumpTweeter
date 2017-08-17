@@ -13,7 +13,7 @@ namespace TrumpTweeter
 
     public static class Globals
     {
-        public static string url = @"https://www.reddit.com/r/The_Donald/new/.json";
+        public static string url = @"https://www.reddit.com/r/The_Donald/new/"+".json";
     }
 
     class Program
