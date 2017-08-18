@@ -19,6 +19,7 @@ namespace TrumpTweeter
             RootObject rootObject = JsonConvert.DeserializeObject<RootObject>(redditConnectionJson);
             
             CheckForImages(rootObject);
+            
         }
 
         // We'll use this method to check if there are

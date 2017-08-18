@@ -73,11 +73,12 @@ namespace TrumpTweeter
         {
             if (connection.State == ConnectionState.Open)
             {
+                HasBeenPosted();
                 GetNumberOfRows();
                 int numberOfRows = GetNumberOfRows();
-                Console.WriteLine(GetNumberOfRows());
                 connection.Close();
             }
+            
         }
 
         // Here is where we insert our data in the
@@ -121,6 +122,28 @@ namespace TrumpTweeter
             using (MySqlCommand cnt = new MySqlCommand(countCommand, connection))
             {
                 return Convert.ToInt32(cnt.ExecuteScalar());
+            }
+        }
+
+        public void HasBeenPosted()
+        {
+            // SQL query that will find all rows
+            // whose has_been_posted colum = 0
+            // so we don't send duplicate tweets
+
+            string selectCommand = "SELECT * FROM `imageurls` WHERE `has_been_posted` IN (SELECT `has_been_posted` FROM `imageurls` GROUP BY `has_been_posted` HAVING COUNT(*) > 1)";
+
+
+            using (MySqlCommand select = new MySqlCommand(selectCommand, connection))
+            {
+                using (MySqlDataReader reader = select.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        Console.WriteLine(reader.GetString(0));
+                        Console.WriteLine(reader.GetString(1));
+                    }
+                }
             }
         }
     }
