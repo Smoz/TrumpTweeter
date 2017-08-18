@@ -129,22 +129,26 @@ namespace TrumpTweeter
         {
             // SQL query that will find all rows
             // whose has_been_posted colum = 0
-            // so we don't send duplicate tweets
+            // so we don't send duplicate tweets            
 
-            string selectCommand = "SELECT * FROM `imageurls` WHERE `has_been_posted` IN (SELECT `has_been_posted` FROM `imageurls` GROUP BY `has_been_posted` HAVING COUNT(*) > 1)";
+            string selectRandom = "SELECT * FROM `imageurls` WHERE `has_been_posted` IN (SELECT `has_been_posted` FROM `imageurls` GROUP BY `has_been_posted` HAVING COUNT(*) > 1) ORDER BY rand() LIMIT @limit";
 
+            int limit = 5;
 
-            using (MySqlCommand select = new MySqlCommand(selectCommand, connection))
+            using (MySqlCommand select = new MySqlCommand(selectRandom, connection))
             {
+                select.Parameters.Add("@limit", MySqlDbType.Int32).Value = limit;
+
                 using (MySqlDataReader reader = select.ExecuteReader())
                 {
                     while (reader.Read())
                     {
                         Console.WriteLine(reader.GetString(0));
-                        Console.WriteLine(reader.GetString(1));
+                        Console.WriteLine(reader.GetString(1));                        
                     }
                 }
             }
         }
+
     }
 }
