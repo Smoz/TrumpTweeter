@@ -46,7 +46,7 @@ namespace TrumpTweeter
         {
             Random randomizeMinutes = new Random();
 
-            // Here we can set a range of number to select
+            // Here we can set a range of numbers to select
             // a random number from
             // This number will be converted to minutes
             // and that number is passed to the RedditTimer()
