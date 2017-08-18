@@ -16,7 +16,7 @@ namespace TrumpTweeter
         private string database;
         private string uid;
         private string password;
-        
+
         // This method is used to initialize our connection
         // to our database
 
@@ -50,7 +50,7 @@ namespace TrumpTweeter
                 connection.Open();
                 Console.WriteLine("Connected to the database!");
                 Insert(title, image);
-                CloseConnection();              
+                CloseConnection();
             }
             else if (connection.State == ConnectionState.Open)
             {
@@ -69,7 +69,7 @@ namespace TrumpTweeter
         // Once we have our row numbers we close the
         // connection
 
-        private void CloseConnection()
+        public void CloseConnection()
         {
             if (connection.State == ConnectionState.Open)
             {
@@ -78,7 +78,7 @@ namespace TrumpTweeter
                 int numberOfRows = GetNumberOfRows();
                 connection.Close();
             }
-            
+
         }
 
         // Here is where we insert our data in the
@@ -88,14 +88,14 @@ namespace TrumpTweeter
         // the data
 
         public void Insert(string title, string image)
-        {            
+        {
             // This is the sql command which uses
             // parameters to avoid things like
             // sql injection attacks
 
             string insert = "INSERT INTO imageurls(post_title, image_url, post_date) VALUES(@post_title,@image_url,@post_date);";
 
-            if(connection.State == ConnectionState.Open)
+            if (connection.State == ConnectionState.Open)
             {
                 Console.WriteLine("Inserting my data into your table. Giggity!");
 
@@ -125,17 +125,17 @@ namespace TrumpTweeter
             }
         }
 
-        public string HasBeenPosted()
+        public Twitter HasBeenPosted()
         {
             // SQL query that will find all rows
             // whose has_been_posted colum = 0
-            // so we don't send duplicate tweets            
-
+            // so we don't send duplicate tweets  
+            
+            var twitter = new Twitter();
             string selectRandom = "SELECT * FROM `imageurls` WHERE `has_been_posted` IN (SELECT `has_been_posted` FROM `imageurls` GROUP BY `has_been_posted` HAVING COUNT(*) > 1) ORDER BY rand() LIMIT @limit";
 
             int limit = 5;
-            string tweet = "";
-            
+
             using (MySqlCommand select = new MySqlCommand(selectRandom, connection))
             {
                 select.Parameters.Add("@limit", MySqlDbType.Int32).Value = limit;
@@ -144,16 +144,20 @@ namespace TrumpTweeter
                 {
                     while (reader.Read())
                     {
+                        // checking the contents of the items
                         Console.WriteLine(reader.GetString(0));
                         Console.WriteLine(reader.GetString(1));
+                        
+                        // assigning the db items to a twitter object
+                        twitter.title = reader.GetString(0);
+                        twitter.image = reader.GetString(1);
 
-                        tweet = reader.GetString(0) + reader.GetString(1);
-                        return tweet;
+                        // returning that object
+                        return twitter;
                     }
-                }return tweet;
+                }
+                return twitter;
             }
-            
         }
-
     }
 }

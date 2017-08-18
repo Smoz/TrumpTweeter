@@ -16,6 +16,9 @@ namespace TrumpTweeter
         private const string accessToken = "895911288781639680-SDjYnqMb9zERLaed8WwEtv323yqmmoz";
         private const string accessTokenSecret = "8PT5lmK8OR67bSr1up2YwJLSMolpXi0mHGnJDc9fOVEcL";
 
+        public string title { get; set; }
+        public string image { get; set; }
+
         private int UserAuthentication()
         {
             // Set user credentials before posting to Twitter
@@ -79,6 +82,7 @@ namespace TrumpTweeter
                 WebClient wc = new WebClient();
                 try
                 {
+                    // if tweet returns 0 
                     byte[] bytes = wc.DownloadData(image);
                     var media = Upload.UploadImage(bytes);
                     var tweet = Tweet.PublishTweet(title + " " + hashtag, new PublishTweetOptionalParameters
