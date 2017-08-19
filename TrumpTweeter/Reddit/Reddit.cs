@@ -45,13 +45,11 @@ namespace TrumpTweeter
                     var title = item.data.title;
                     var image = item.data.url;
 
-                    ConnectToDatabase(title, image);
-
-                    var twitter = new Twitter();
-                    twitter.PublishTweet(title, image);
+                    // Insert title and image to database
+                    var dbConnection = new DbConnection();
+                    dbConnection.Insert(title, image);
                     
                 }
-                
             } 
 
             // Here we create our timer object and
@@ -60,18 +58,6 @@ namespace TrumpTweeter
 
             var timer = new ATimer();
             ATimer.RedditTimer();            
-        }
-        
-        public void ConnectToDatabase(string title, string image)
-        {
-            // Here we create our database connection
-            // object so we can add our titles and image
-            // urls to a mysql database for further
-            // processing and use
-
-            DbConnection dbConnection = new DbConnection();
-            dbConnection.ConnectingToDb(title, image);
-        }
-                
+        } 
     }
 }

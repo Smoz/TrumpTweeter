@@ -82,7 +82,6 @@ namespace TrumpTweeter
                 WebClient wc = new WebClient();
                 try
                 {
-                    // if tweet returns 0 
                     byte[] bytes = wc.DownloadData(image);
                     var media = Upload.UploadImage(bytes);
                     var tweet = Tweet.PublishTweet(title + " " + hashtag, new PublishTweetOptionalParameters
