@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading;
-using Tweetinvi;
+using System;
 
 // Objective: Scrape memes/images from r/The_Donald
 // and create tweets out of them to send from the
@@ -9,7 +7,6 @@ using Tweetinvi;
 
 namespace TrumpTweeter
 {
-    public static class Globals
     class Program
     {
         static void Main(string[] args)
@@ -28,8 +25,12 @@ namespace TrumpTweeter
             Console.WriteLine("Hello and welcome to the TrumpTweeter 9000!");
             Console.WriteLine("Let's get started. Beep boop boop...");          
 
+            // Connects to Reddit and adds new tweets to database.
             var reddit = new Reddit();
             reddit.ConnectToReddit();
+
+            // Opens database, searches for new tweets, and posts tweets
+            // *Some method*
             Console.ReadKey();
         }
     }
