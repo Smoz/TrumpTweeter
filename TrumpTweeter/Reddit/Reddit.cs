@@ -8,6 +8,7 @@ namespace TrumpTweeter
 {
     public class Reddit
     {
+        private string Url = @"https://www.reddit.com/r/The_Donald/new/" + ".json";
 
         // We'll use this method to connect to the
         // r/The_Donald subreddit and then call the
@@ -15,11 +16,10 @@ namespace TrumpTweeter
 
         public void ConnectToReddit()
         {
-            var redditConnectionJson = new WebClient().DownloadString(Globals.url);
+            var redditConnectionJson = new WebClient().DownloadString(Url);
             RootObject rootObject = JsonConvert.DeserializeObject<RootObject>(redditConnectionJson);
             
             CheckForImages(rootObject);
-            
         }
 
         // We'll use this method to check if there are
