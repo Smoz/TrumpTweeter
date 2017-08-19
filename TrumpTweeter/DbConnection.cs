@@ -113,8 +113,8 @@ namespace TrumpTweeter
                         Console.WriteLine(reader.GetString(1));
 
                         // assigning the db items to a twitter object
-                        twitter.title = reader.GetString(0);
-                        twitter.image = reader.GetString(1);
+                        twitter.Title = reader.GetString(0);
+                        twitter.Image = reader.GetString(1);
 
                         // returning that object
                         return twitter;

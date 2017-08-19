@@ -16,8 +16,8 @@ namespace TrumpTweeter
         private const string accessToken = "895911288781639680-SDjYnqMb9zERLaed8WwEtv323yqmmoz";
         private const string accessTokenSecret = "8PT5lmK8OR67bSr1up2YwJLSMolpXi0mHGnJDc9fOVEcL";
 
-        public string title { get; set; }
-        public string image { get; set; }
+        public string Title { get; set; }
+        public string Image { get; set; }
 
         private int UserAuthentication()
         {

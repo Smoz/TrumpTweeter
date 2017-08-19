@@ -9,13 +9,7 @@ using Tweetinvi;
 
 namespace TrumpTweeter
 {
-    // A class for publicly accessible variables
-
     public static class Globals
-    {
-        public static string url = @"https://www.reddit.com/r/The_Donald/new/"+".json";
-    }
-
     class Program
     {
         static void Main(string[] args)
