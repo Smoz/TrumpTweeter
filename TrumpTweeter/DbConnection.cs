@@ -89,38 +89,65 @@ namespace TrumpTweeter
             }
         }
 
-        public Twitter HasBeenPosted()
+        // SQL query that will find all rows
+        // whose has_been_posted colum = 0
+        // so we don't send duplicate tweets 
+
+
+        public List<Twitter> GetTweets()
         {
-            // SQL query that will find all rows
-            // whose has_been_posted colum = 0
-            // so we don't send duplicate tweets  
 
-            var twitter = new Twitter();
-            string selectRandom = "SELECT * FROM `imageurls` WHERE `has_been_posted` IN (SELECT `has_been_posted` FROM `imageurls` GROUP BY `has_been_posted` HAVING COUNT(*) > 1) ORDER BY rand() LIMIT @limit";
+            // * Please implement this for me in your database. I'm using local db for testing so I don't have your procedures! :(
+            // Just need this method to return 5 tweets at random to a Twitter object list.
+            // You can replace lookForZeros string with your command.
+            //string selectRandom = "SELECT * FROM `imageurls` WHERE `has_been_posted` IN (SELECT `has_been_posted` FROM `imageurls` GROUP BY `has_been_posted` HAVING COUNT(*) > 1) ORDER BY rand() LIMIT @limit";
 
-            int limit = 5;
+            //int limit = 5;
 
-            using (MySqlCommand select = new MySqlCommand(selectRandom, connection))
+            using (connection = new MySqlConnection(connectionString))
             {
-                select.Parameters.Add("@limit", MySqlDbType.Int32).Value = limit;
+                //check for 0s in db
+                string lookForZeros = "SELECT * FROM imageurls WHERE has_been_posted = 0 LIMIT 5";
+                var tweetsNotPosted = new List<Twitter>();
 
-                using (MySqlDataReader reader = select.ExecuteReader())
+                using (var cmd = new MySqlCommand(lookForZeros, connection))
                 {
+                    connection.Open();
+                    var reader = cmd.ExecuteReader();
+
+                    // puts tweets that haven't posted into Twitter object list
                     while (reader.Read())
                     {
-                        // checking the contents of the items
-                        Console.WriteLine(reader.GetString(0));
-                        Console.WriteLine(reader.GetString(1));
+                        var twitter = new Twitter
+                        {
+                            Title = reader[0].ToString(),
+                            Image = reader[1].ToString()
+                        };
 
-                        // assigning the db items to a twitter object
-                        twitter.Title = reader.GetString(0);
-                        twitter.Image = reader.GetString(1);
+                        tweetsNotPosted.Add(twitter);
 
-                        // returning that object
-                        return twitter;
+                        // update has_been_posted to 1
+                        HasBeenPosted(reader[1].ToString());
                     }
+                    return tweetsNotPosted;
                 }
-                return twitter;
+            }
+        }
+
+        // Changes has_been_posted column to 1
+        public void HasBeenPosted(string image)
+        {
+            string update = "UPDATE imageurls SET has_been_posted = 1 WHERE image_url LIKE @image_url";
+
+            using (connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (var cmd = new MySqlCommand(update, connection))
+                {
+                    cmd.Parameters.Add("@image_url", MySqlDbType.Text).Value = image;
+                    cmd.ExecuteNonQuery();
+                }
             }
         }
     }

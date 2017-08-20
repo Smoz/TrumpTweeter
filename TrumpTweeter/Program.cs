@@ -23,14 +23,16 @@ namespace TrumpTweeter
         static void Greeting()
         {
             Console.WriteLine("Hello and welcome to the TrumpTweeter 9000!");
-            Console.WriteLine("Let's get started. Beep boop boop...");          
+            Console.WriteLine("Let's get started. Beep boop boop...");
 
             // Connects to Reddit and adds new tweets to database.
             var reddit = new Reddit();
             reddit.ConnectToReddit();
 
-            // Opens database, searches for new tweets, and posts tweets
-            // *Some method*
+            // Opens Db, grabs 5 random tweets that haven't been posted and published them to Twitter.
+            var twitter = new Twitter();
+            twitter.NewTweets();
+
             Console.ReadKey();
         }
     }

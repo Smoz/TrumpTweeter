@@ -71,7 +71,6 @@ namespace TrumpTweeter
             string hashtag = GetHashtags();
 
             // Authenticate user before proceeding
-
             int userAuthentication = UserAuthentication();
             if (userAuthentication == 0)
             {
@@ -80,22 +79,40 @@ namespace TrumpTweeter
             else
             {
                 WebClient wc = new WebClient();
-                try
+                byte[] bytes = wc.DownloadData(image);
+                var media = Upload.UploadImage(bytes);
+                var tweet = Tweet.PublishTweet(title + " " + hashtag, new PublishTweetOptionalParameters
                 {
-                    byte[] bytes = wc.DownloadData(image);
-                    var media = Upload.UploadImage(bytes);
-                    var tweet = Tweet.PublishTweet(title + " " + hashtag, new PublishTweetOptionalParameters
-                    {
-                        Medias = { media }
-                    });
-                }
-                catch (ConnectionAbortedException e)
-                {
-                    Console.WriteLine("ConnectionAbortedException: {0}", e.Message);
-                    PublishTweet(title, image);
-                }
+                    Medias = { media }
+                });
+
+                Console.WriteLine("Tweet posted!");
+
+                // Time is only temporary, need to implement ATimer here.
+                System.Threading.Thread.Sleep(50000);
             }
                       
+        }
+
+        public void NewTweets()
+        {
+            // Search DB for new images
+            // publish tweet to twitter
+            var db = new DbConnection();
+            List<Twitter> getTweets = db.GetTweets();
+
+            foreach (var tweet in getTweets)
+            {
+                // Shortens title to only 140 characters.
+                // But need to fix it where the title can make some sense.
+                int maxLength = Math.Min(tweet.Title.Length, 140);
+                tweet.Title = tweet.Title.Substring(0, maxLength);
+
+                Console.WriteLine(tweet.Title);
+                Console.WriteLine(tweet.Image);
+                PublishTweet(tweet.Title, tweet.Image);
+            }
+
         }
 
     }
