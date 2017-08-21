@@ -68,6 +68,9 @@ namespace TrumpTweeter
 
         public void PublishTweet(string title, string image)
         {
+            
+            
+
             string hashtag = GetHashtags();
 
             // Authenticate user before proceeding
@@ -86,12 +89,15 @@ namespace TrumpTweeter
                     Medias = { media }
                 });
 
-                Console.WriteLine("Tweet posted!");
-
-                // Time is only temporary, need to implement ATimer here.
-                System.Threading.Thread.Sleep(50000);
+                Console.WriteLine("Tweet posted!");                
             }
-                      
+            // Here we create our timer object and
+            // call our method to randomize posting
+            // tweets
+
+            //var timer = new ATimer();
+            //ATimer.TwitterTimer();
+
         }
 
         public void NewTweets()

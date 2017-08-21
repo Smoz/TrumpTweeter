@@ -53,7 +53,7 @@ namespace TrumpTweeter
             // which then will call the CallImageScraper()
             // method after that time has elapsed
 
-            int randomMinutes = randomizeMinutes.Next(15, 30);
+            int randomMinutes = randomizeMinutes.Next(1, 5);
 
             return randomMinutes;
         }
@@ -72,7 +72,7 @@ namespace TrumpTweeter
         {
             Random randomizeMinutes = new Random();
 
-            int randomMinutes = randomizeMinutes.Next(3, 10);
+            int randomMinutes = randomizeMinutes.Next(2, 6);
             return randomMinutes;
         }
 

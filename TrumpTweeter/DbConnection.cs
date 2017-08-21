@@ -51,7 +51,7 @@ namespace TrumpTweeter
                         cmd.Parameters.Add("@post_title", MySqlDbType.String).Value = title.Replace("'", "");
                         cmd.Parameters.Add("@image_url", MySqlDbType.String).Value = image;
                         cmd.Parameters.Add("@post_date", MySqlDbType.Date).Value = DateTime.Now;
-                        //cmd.Parameters.Add("@has_been_posted", MySqlDbType.Int32).Value = 0;
+                        cmd.Parameters.Add("@has_been_posted", MySqlDbType.Int32).Value = 0;
                         cmd.ExecuteNonQuery();
                     }
                 }
