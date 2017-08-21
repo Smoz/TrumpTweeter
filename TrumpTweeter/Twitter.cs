@@ -68,9 +68,6 @@ namespace TrumpTweeter
 
         public void PublishTweet(string title, string image)
         {
-            
-            
-
             string hashtag = GetHashtags();
 
             // Authenticate user before proceeding
@@ -81,23 +78,24 @@ namespace TrumpTweeter
             }
             else
             {
-                WebClient wc = new WebClient();
-                byte[] bytes = wc.DownloadData(image);
-                var media = Upload.UploadImage(bytes);
-                var tweet = Tweet.PublishTweet(title + " " + hashtag, new PublishTweetOptionalParameters
+                if (!image.Equals("") || !image.Equals(null))
                 {
-                    Medias = { media }
-                });
+                    WebClient wc = new WebClient();
+                    byte[] bytes = wc.DownloadData(image);
+                    var media = Upload.UploadImage(bytes);
+                    var tweet = Tweet.PublishTweet(title + " " + hashtag, new PublishTweetOptionalParameters
+                    {
+                        Medias = { media }
+                    });
 
-                Console.WriteLine("Tweet posted!");                
+                    Console.WriteLine("Tweet posted!");
+
+                    // Time is only temporary, need to implement ATimer here.
+                    System.Threading.Thread.Sleep(50000);
+                }
+                
             }
-            // Here we create our timer object and
-            // call our method to randomize posting
-            // tweets
-
-            //var timer = new ATimer();
-            //ATimer.TwitterTimer();
-
+                      
         }
 
         public void NewTweets()
@@ -111,7 +109,7 @@ namespace TrumpTweeter
             {
                 // Shortens title to only 140 characters.
                 // But need to fix it where the title can make some sense.
-                int maxLength = Math.Min(tweet.Title.Length, 140);
+                int maxLength = Math.Min(tweet.Title.Length, 100);
                 tweet.Title = tweet.Title.Substring(0, maxLength);
 
                 Console.WriteLine(tweet.Title);
