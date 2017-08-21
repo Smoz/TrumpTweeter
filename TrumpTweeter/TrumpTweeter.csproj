@@ -118,6 +118,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BTimer.cs" />
     <Compile Include="CustomExceptions.cs" />
     <Compile Include="DbConnection.cs" />
     <Compile Include="Program.cs" />

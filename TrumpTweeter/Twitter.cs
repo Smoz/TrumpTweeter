@@ -5,6 +5,7 @@ using Tweetinvi.Parameters;
 using Tweetinvi.Models;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading.Tasks;
 
 
 namespace TrumpTweeter
@@ -96,37 +97,35 @@ namespace TrumpTweeter
                     Console.WriteLine("Tweet posted!");
 
                     // Time is only temporary, need to implement ATimer here.
-                    
-                    //System.Threading.Thread.Sleep(50000);                    
-                }
 
+                    //System.Threading.Thread.Sleep(50000);
+                }
+                
             }
-                      
         }
 
-        public void NewTweets()
+        public async void NewTweetsAsync()
         {
             // Search DB for new images
             // publish tweet to twitter
             var db = new DbConnection();
             List<Twitter> getTweets = db.GetTweets();
-
+            
             foreach (var tweet in getTweets)
             {
                 // Shortens title to only 140 characters.
                 // But need to fix it where the title can make some sense.
                 int maxLength = Math.Min(tweet.Title.Length, 100);
                 tweet.Title = tweet.Title.Substring(0, maxLength);
+                
+                int randomMin = BTimer.RandomizeTwitterTimer();
 
                 Console.WriteLine(tweet.Title);
                 Console.WriteLine(tweet.Image);
                 PublishTweet(tweet.Title, tweet.Image);
-
-                var timer = new ATimer();
-                ATimer.TwitterTimer();
+                await Task.Delay(TimeSpan.FromMinutes(randomMin));
             }
 
-            
         }
 
     }

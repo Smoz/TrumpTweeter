@@ -50,14 +50,16 @@ namespace TrumpTweeter
                     dbConnection.Insert(title, image);
                     
                 }
-            } 
+            }
+
+            var twitter = new Twitter();
+            twitter.NewTweetsAsync();
 
             // Here we create our timer object and
             // call our method to randomize scraping
             // and posting tweets
 
-            var timer = new ATimer();
-            ATimer.RedditTimer();            
+            //ATimer.RedditTimer();            
         } 
     }
 }

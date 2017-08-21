@@ -17,7 +17,7 @@ namespace TrumpTweeter
         // get banned
 
         static System.Timers.Timer _rtimer;
-        static System.Timers.Timer _ttimer;
+        
 
         public static void RedditTimer()
         {
@@ -59,29 +59,7 @@ namespace TrumpTweeter
             return randomMinutes;
         }
 
-        public static void TwitterTimer()
-        {
-            _ttimer = new System.Timers.Timer(TimeSpan.FromMinutes(RandomizeTwitterTimer()).TotalMilliseconds)
-            {
-                AutoReset = true
-            };
-            _ttimer.Elapsed += new System.Timers.ElapsedEventHandler(CallNewTweets);
-            _ttimer.Start();
-        }
-
-        private static void CallNewTweets(object sender, ElapsedEventArgs e)
-        {
-            var twitter = new Twitter();
-            twitter.NewTweets();
-        }
-
-        private static int RandomizeTwitterTimer()
-        {
-            Random randomizeMinutes = new Random();
-
-            int randomMinutes = randomizeMinutes.Next(5, 10);
-            return randomMinutes;
-        }
+        
 
         
     }

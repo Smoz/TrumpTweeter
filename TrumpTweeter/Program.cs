@@ -26,6 +26,7 @@ namespace TrumpTweeter
             Console.WriteLine("Let's get started. Beep boop boop...");
 
             // Connects to Reddit and adds new tweets to database.
+            
 
             var reddit = new Reddit();
             reddit.ConnectToReddit();
@@ -35,7 +36,7 @@ namespace TrumpTweeter
             // to Twitter.
 
             var twitter = new Twitter();
-            twitter.NewTweets();
+            twitter.NewTweetsAsync();
 
             Console.ReadKey();
         }
