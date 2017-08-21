@@ -51,7 +51,7 @@ namespace TrumpTweeter
                         cmd.Parameters.Add("@post_title", MySqlDbType.String).Value = title.Replace("'", "");
                         cmd.Parameters.Add("@image_url", MySqlDbType.String).Value = image;
                         cmd.Parameters.Add("@post_date", MySqlDbType.Date).Value = DateTime.Now;
-                        cmd.Parameters.Add("@has_been_posted", MySqlDbType.Int32).Value = 0;
+                        //cmd.Parameters.Add("@has_been_posted", MySqlDbType.Int32).Value = 0;
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -92,27 +92,31 @@ namespace TrumpTweeter
         // SQL query that will find all rows
         // whose has_been_posted colum = 0
         // so we don't send duplicate tweets 
-
-
+        
         public List<Twitter> GetTweets()
         {
-
-            // * Please implement this for me in your database. I'm using local db for testing so I don't have your procedures! :(
-            // Just need this method to return 5 tweets at random to a Twitter object list.
-            // You can replace lookForZeros string with your command.
-            //string selectRandom = "SELECT * FROM `imageurls` WHERE `has_been_posted` IN (SELECT `has_been_posted` FROM `imageurls` GROUP BY `has_been_posted` HAVING COUNT(*) > 1) ORDER BY rand() LIMIT @limit";
-
-            //int limit = 5;
-
+            
             using (connection = new MySqlConnection(connectionString))
-            {
-                //check for 0s in db
-                string lookForZeros = "SELECT * FROM imageurls WHERE has_been_posted = 0 LIMIT 5";
+            {              
+
+                // SQL command to check for 0's in the has_been_posted
+                // column and return a random selection of posts for
+                // the limit set
+                // Need to add some randomization to the limit for
+                // more humanlike behavior (aka posting)
+                string lookForZeros = "SELECT * FROM `imageurls` WHERE `has_been_posted` IN (SELECT `has_been_posted` FROM `imageurls` GROUP BY `has_been_posted` HAVING COUNT(*) > 1) ORDER BY rand() LIMIT @limit";
+
+                // List of tweets not posted yet
                 var tweetsNotPosted = new List<Twitter>();
+
+                // Number of tweets to attempt to post
+                int limit = 5;
 
                 using (var cmd = new MySqlCommand(lookForZeros, connection))
                 {
                     connection.Open();
+                    
+                    cmd.Parameters.Add("@limit", MySqlDbType.Int32).Value = limit;
                     var reader = cmd.ExecuteReader();
 
                     // puts tweets that haven't posted into Twitter object list

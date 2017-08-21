@@ -56,6 +56,35 @@ namespace TrumpTweeter
             int randomMinutes = randomizeMinutes.Next(15, 30);
 
             return randomMinutes;
-        }        
+        }
+
+        public static void TwitterTimer()
+        {
+            _timer = new System.Timers.Timer(TimeSpan.FromMinutes(RandomizeTwitterTimer()).TotalMilliseconds)
+            {
+                AutoReset = true
+            };
+            _timer.Elapsed += new System.Timers.ElapsedEventHandler(CallPublishTweet);
+            _timer.Start();
+        }
+
+        private static int RandomizeTwitterTimer()
+        {
+            Random randomizeMinutes = new Random();
+
+            int randomMinutes = randomizeMinutes.Next(3, 10);
+            return randomMinutes;
+        }
+
+        private static void CallPublishTweet(object sender, ElapsedEventArgs e)
+        {
+            var twitter = new Twitter();
+            string title = twitter.Title;
+            string image = twitter.Image;
+            twitter.PublishTweet(title,image);
+        }
     }
+
+    
+
 }
