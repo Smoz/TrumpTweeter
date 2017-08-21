@@ -68,6 +68,11 @@ namespace TrumpTweeter
 
         public void PublishTweet(string title, string image)
         {
+
+            // Here we create our timer object and
+            // call our method to randomize posting
+            // tweets            
+            
             string hashtag = GetHashtags();
 
             // Authenticate user before proceeding
@@ -78,22 +83,23 @@ namespace TrumpTweeter
             }
             else
             {
-                if (!image.Equals("") || !image.Equals(null))
+                if (!image.Contains("gif"))
                 {
                     WebClient wc = new WebClient();
                     byte[] bytes = wc.DownloadData(image);
                     var media = Upload.UploadImage(bytes);
-                    var tweet = Tweet.PublishTweet(title + " " + hashtag, new PublishTweetOptionalParameters
+                    var tweets = Tweet.PublishTweet(title + " " + hashtag, new PublishTweetOptionalParameters
                     {
                         Medias = { media }
                     });
-
+                    
                     Console.WriteLine("Tweet posted!");
 
                     // Time is only temporary, need to implement ATimer here.
-                    System.Threading.Thread.Sleep(50000);
+                    
+                    //System.Threading.Thread.Sleep(50000);                    
                 }
-                
+
             }
                       
         }
@@ -115,8 +121,12 @@ namespace TrumpTweeter
                 Console.WriteLine(tweet.Title);
                 Console.WriteLine(tweet.Image);
                 PublishTweet(tweet.Title, tweet.Image);
+
+                var timer = new ATimer();
+                ATimer.TwitterTimer();
             }
 
+            
         }
 
     }

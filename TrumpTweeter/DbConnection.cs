@@ -40,7 +40,7 @@ namespace TrumpTweeter
                 try
                 {
                     connection.Open();
-                    string insert = "INSERT INTO imageurls(post_title, image_url, post_date, has_been_posted) VALUES(@post_title,@image_url,@post_date, @has_been_posted);";
+                    string insert = "INSERT INTO imageurls(post_title, image_url, post_date) VALUES(@post_title,@image_url,@post_date);";
 
                     Console.WriteLine("Inserting my data into your table. Giggity!");
 
@@ -51,7 +51,7 @@ namespace TrumpTweeter
                         cmd.Parameters.Add("@post_title", MySqlDbType.String).Value = title.Replace("'", "");
                         cmd.Parameters.Add("@image_url", MySqlDbType.String).Value = image;
                         cmd.Parameters.Add("@post_date", MySqlDbType.Date).Value = DateTime.Now;
-                        cmd.Parameters.Add("@has_been_posted", MySqlDbType.Int32).Value = 0;
+                        //cmd.Parameters.Add("@has_been_posted", MySqlDbType.Int32).Value = 0;
                         cmd.ExecuteNonQuery();
                     }
                 }

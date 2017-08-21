@@ -16,16 +16,17 @@ namespace TrumpTweeter
         // and twitter tweeting so we don't
         // get banned
 
-        static System.Timers.Timer _timer;
+        static System.Timers.Timer _rtimer;
+        static System.Timers.Timer _ttimer;
 
         public static void RedditTimer()
         {
-            _timer = new System.Timers.Timer(TimeSpan.FromMinutes(RandomizeRedditTimer()).TotalMilliseconds)
+            _rtimer = new System.Timers.Timer(TimeSpan.FromMinutes(RandomizeRedditTimer()).TotalMilliseconds)
             {
                 AutoReset = true
             };
-            _timer.Elapsed += new System.Timers.ElapsedEventHandler(CallImageScraper);
-            _timer.Start();
+            _rtimer.Elapsed += new System.Timers.ElapsedEventHandler(CallImageScraper);
+            _rtimer.Start();
         }
 
         // This method reinitializes the reddit
@@ -53,36 +54,36 @@ namespace TrumpTweeter
             // which then will call the CallImageScraper()
             // method after that time has elapsed
 
-            int randomMinutes = randomizeMinutes.Next(1, 5);
+            int randomMinutes = randomizeMinutes.Next(1, 2);
 
             return randomMinutes;
         }
 
         public static void TwitterTimer()
         {
-            _timer = new System.Timers.Timer(TimeSpan.FromMinutes(RandomizeTwitterTimer()).TotalMilliseconds)
+            _ttimer = new System.Timers.Timer(TimeSpan.FromMinutes(RandomizeTwitterTimer()).TotalMilliseconds)
             {
                 AutoReset = true
             };
-            _timer.Elapsed += new System.Timers.ElapsedEventHandler(CallPublishTweet);
-            _timer.Start();
+            _ttimer.Elapsed += new System.Timers.ElapsedEventHandler(CallNewTweets);
+            _ttimer.Start();
+        }
+
+        private static void CallNewTweets(object sender, ElapsedEventArgs e)
+        {
+            var twitter = new Twitter();
+            twitter.NewTweets();
         }
 
         private static int RandomizeTwitterTimer()
         {
             Random randomizeMinutes = new Random();
 
-            int randomMinutes = randomizeMinutes.Next(2, 6);
+            int randomMinutes = randomizeMinutes.Next(1, 2);
             return randomMinutes;
         }
 
-        private static void CallPublishTweet(object sender, ElapsedEventArgs e)
-        {
-            var twitter = new Twitter();
-            string title = twitter.Title;
-            string image = twitter.Image;
-            twitter.PublishTweet(title,image);
-        }
+        
     }
 
     
