@@ -59,7 +59,7 @@ namespace TrumpTweeter
             // call our method to randomize scraping
             // and posting tweets
 
-            //ATimer.RedditTimer();            
+            ATimer.RedditTimer();            
         } 
     }
 }
