@@ -28,7 +28,7 @@ namespace TrumpTweeter
             // Connects to Reddit and adds new tweets to database.
             // Make this an aysnc process
             var reddit = new Reddit();
-            reddit.ConnectToReddit();
+            reddit.StartRedditAsync();
 
             // Opens Db, grabs one Tweet
             // that hasn't been posted and publishes it

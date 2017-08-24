@@ -2,7 +2,7 @@ using System;
 using System.Net;
 using Newtonsoft.Json;
 using TrumpTweeter.Json;
-
+using System.Threading.Tasks;
 
 namespace TrumpTweeter
 {
@@ -14,12 +14,30 @@ namespace TrumpTweeter
         // r/The_Donald subreddit and then call the
         // ScrapeImage method
 
-        public void ConnectToReddit()
+        public async void ConnectToReddit()
         {
+            int randomMin = BTimer.RandomizeTwitterTimer();
+
             var redditConnectionJson = new WebClient().DownloadString(Url);
             RootObject rootObject = JsonConvert.DeserializeObject<RootObject>(redditConnectionJson);
+
+            CheckForImages(rootObject); 
+            Console.WriteLine("Waiting " + randomMin + " minutes for next scrape " + DateTime.Now);
+
+            await Task.Delay(TimeSpan.FromMinutes(randomMin));
+            await Task.Run(() =>
+            {
+                ConnectToReddit();
+            });
             
-            CheckForImages(rootObject);
+        }
+
+        public async void StartRedditAsync()
+        {
+             await Task.Run(() =>
+          {
+              ConnectToReddit();
+          });
         }
 
         // We'll use this method to check if there are
@@ -45,7 +63,7 @@ namespace TrumpTweeter
                     var title = item.data.title;
                     var image = item.data.url;
 
-                    // Insert title and image to database
+                    Insert title and image to database
                     var dbConnection = new DbConnection();
                     dbConnection.Insert(title, image);
                     
