@@ -26,13 +26,12 @@ namespace TrumpTweeter
             Console.WriteLine("Let's get started. Beep boop boop...");
 
             // Connects to Reddit and adds new tweets to database.
-            
-
+            // Make this an aysnc process
             var reddit = new Reddit();
             reddit.ConnectToReddit();
 
-            // Opens Db, grabs a number of random tweets 
-            // that haven't been posted and publishes them 
+            // Opens Db, grabs one Tweet
+            // that hasn't been posted and publishes it
             // to Twitter.
 
             var twitter = new Twitter();
