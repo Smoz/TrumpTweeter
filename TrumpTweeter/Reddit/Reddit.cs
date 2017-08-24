@@ -63,7 +63,7 @@ namespace TrumpTweeter
                     var title = item.data.title;
                     var image = item.data.url;
 
-                    Insert title and image to database
+                    //Insert title and image to database
                     var dbConnection = new DbConnection();
                     dbConnection.Insert(title, image);
                     
