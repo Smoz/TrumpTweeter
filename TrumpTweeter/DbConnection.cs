@@ -149,7 +149,7 @@ namespace TrumpTweeter
 
                 using (var cmd = new MySqlCommand(update, connection))
                 {
-                    cmd.Parameters.Add("@image_url", MySqlDbType.Text).Value = image;
+                    cmd.Parameters.Add("@image_url", MySqlDbType.String).Value = image;
                     cmd.ExecuteNonQuery();
                 }
             }

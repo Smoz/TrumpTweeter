@@ -87,18 +87,24 @@ namespace TrumpTweeter
                 if (!image.Contains("gif"))
                 {
                     WebClient wc = new WebClient();
-                    byte[] bytes = wc.DownloadData(image);
-                    var media = Upload.UploadImage(bytes);
-                    var tweets = Tweet.PublishTweet(title + " " + hashtag, new PublishTweetOptionalParameters
+                    try
                     {
-                        Medias = { media }
-                    });
+                        byte[] bytes = wc.DownloadData(image);
+                        var media = Upload.UploadImage(bytes);
+                        var tweets = Tweet.PublishTweet(title + " " + hashtag, new PublishTweetOptionalParameters
+                        {
+                            Medias = { media }
+                        });
+
+                        Console.WriteLine("Tweet posted!");
+                    }
+                    catch (Exception)
+                    {
+
+                        Console.WriteLine("Image missing!");
+                        NewTweetsAsync();
+                    }
                     
-                    Console.WriteLine("Tweet posted!");
-
-                    // Time is only temporary, need to implement ATimer here.
-
-                    //System.Threading.Thread.Sleep(50000);
                 }
                 
             }
@@ -109,23 +115,30 @@ namespace TrumpTweeter
             // Search DB for new images
             // publish tweet to twitter
             var db = new DbConnection();
+            int randomMin = Timer.RandomizeTwitterTimer();
             List<Twitter> getTweets = db.GetTweets();
-            
+
             foreach (var tweet in getTweets)
             {
                 // Shortens title to only 140 characters.
                 // But need to fix it where the title can make some sense.
                 int maxLength = Math.Min(tweet.Title.Length, 100);
                 tweet.Title = tweet.Title.Substring(0, maxLength);
-                
-                int randomMin = BTimer.RandomizeTwitterTimer();
 
                 Console.WriteLine(tweet.Title);
                 Console.WriteLine(tweet.Image);
                 PublishTweet(tweet.Title, tweet.Image);
-                await Task.Delay(TimeSpan.FromMinutes(randomMin));
+                db.HasBeenPosted(tweet.Image);
             }
 
+            Console.WriteLine("Waiting " + randomMin + " minutes for next tweet! " + DateTime.Now);
+            await Task.Delay(TimeSpan.FromMinutes(randomMin));
+            Task.WaitAll();
+            await Task.Run(() =>
+            {
+                NewTweetsAsync();
+            });
+            
         }
 
     }

@@ -16,28 +16,20 @@ namespace TrumpTweeter
 
         public async void ConnectToReddit()
         {
-            int randomMin = BTimer.RandomizeTwitterTimer();
+            int randomMin = Timer.RandomizeRedditTimer();
 
             var redditConnectionJson = new WebClient().DownloadString(Url);
             RootObject rootObject = JsonConvert.DeserializeObject<RootObject>(redditConnectionJson);
 
-            CheckForImages(rootObject); 
+            CheckForImages(rootObject);
             Console.WriteLine("Waiting " + randomMin + " minutes for next scrape " + DateTime.Now);
 
             await Task.Delay(TimeSpan.FromMinutes(randomMin));
+            Task.WaitAll();
             await Task.Run(() =>
             {
                 ConnectToReddit();
             });
-            
-        }
-
-        public async void StartRedditAsync()
-        {
-             await Task.Run(() =>
-          {
-              ConnectToReddit();
-          });
         }
 
         // We'll use this method to check if there are
@@ -52,7 +44,7 @@ namespace TrumpTweeter
             var jpg = "jpg";
             var png = "png";
             var gif = "gif";
-
+            
             foreach (var item in rootObject.data.children)
             {
                 if (item.data.url.Contains(jpg) | item.data.url.Contains(png) | item.data.url.Contains(gif))
@@ -68,12 +60,7 @@ namespace TrumpTweeter
                     dbConnection.Insert(title, image);
                     
                 }
-            }
-
-            // Here we create our timer object and
-            // call our method to randomize scraping
-
-            ATimer.RedditTimer();            
+            }          
         } 
     }
 }

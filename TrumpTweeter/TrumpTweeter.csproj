@@ -118,7 +118,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BTimer.cs" />
     <Compile Include="CustomExceptions.cs" />
     <Compile Include="DbConnection.cs" />
     <Compile Include="Program.cs" />
@@ -138,7 +137,7 @@
     <Compile Include="Reddit\Json\SecureMediaEmbed.cs" />
     <Compile Include="Reddit\Json\Source.cs" />
     <Compile Include="Reddit\Reddit.cs" />
-    <Compile Include="Reddit\ATimer.cs" />
+    <Compile Include="Timer.cs" />
     <Compile Include="Twitter.cs" />
   </ItemGroup>
   <ItemGroup>
