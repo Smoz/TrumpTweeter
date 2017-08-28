@@ -69,11 +69,14 @@ namespace TrumpTweeter
 
         public void PublishTweet(string title, string image)
         {
+            // Activate automatic ratelimit tracking
 
+            RateLimit.RateLimitTrackerMode = RateLimitTrackerMode.TrackAndAwait;
+            
             // Here we create our timer object and
             // call our method to randomize posting
             // tweets            
-            
+
             string hashtag = GetHashtags();
 
             // Authenticate user before proceeding
