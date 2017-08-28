@@ -5,11 +5,7 @@ Images and memes are gathered from reddit.com/r/the_donald/new
 
 To-Do
 <ul>  
-  
-  <li>Add method to prevent duplicate tweeting</li>  
-  
-  
-  
+  <li>Add method to prevent duplicate tweeting</li>   
   <li>Add conditions for selecting images and memes such as by post poularity and age</li>
   <li>Add ability to scrape more than 1 page</li>
 </ul>
