@@ -110,7 +110,9 @@ namespace TrumpTweeter
                 var tweetsNotPosted = new List<Twitter>();
 
                 // Number of tweets to attempt to post
-                int limit = 5;
+
+                int limit = Timer.RandomizeNumberOfTweets();
+                // int limit = 1;
 
                 using (var cmd = new MySqlCommand(lookForZeros, connection))
                 {

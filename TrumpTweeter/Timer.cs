@@ -31,5 +31,13 @@ namespace TrumpTweeter
             int randomMinutes = randomizeMinutes.Next(5, 10);
             return randomMinutes;
         }
+
+        public static int RandomizeNumberOfTweets()
+        {
+            Random randomizetweets = new Random();
+
+            int randomTweets = randomizetweets.Next(1, 3);
+            return randomTweets;
+        }
     }
 }
