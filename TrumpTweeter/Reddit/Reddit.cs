@@ -3,12 +3,16 @@ using System.Net;
 using Newtonsoft.Json;
 using TrumpTweeter.Json;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace TrumpTweeter
 {
     public class Reddit
     {
         private string Url = @"https://www.reddit.com/r/The_Donald/new/" + ".json";
+
+        public string Title { get; set; }
+        public string Image { get; set; }
 
         // We'll use this method to connect to the
         // r/The_Donald subreddit and then call the
@@ -40,7 +44,10 @@ namespace TrumpTweeter
         // our ScrapeImage method
 
         public void CheckForImages(RootObject rootObject)
-        {     
+        {
+            List<Reddit> getRedditPosts = new List<Reddit>();
+            var db = new DbConnection();
+
             var jpg = "jpg";
             var png = "png";
             var gif = "gif";
@@ -49,17 +56,20 @@ namespace TrumpTweeter
             {
                 if (item.data.url.Contains(jpg) | item.data.url.Contains(png) | item.data.url.Contains(gif))
                 {
-                    Console.WriteLine(item.data.title + " " + item.data.url);
-                    Console.WriteLine();
-                                        
-                    var title = item.data.title;
-                    var image = item.data.url;
+                    Title = item.data.title;
+                    Image = item.data.url;
 
-                    //Insert title and image to database
-                    var dbConnection = new DbConnection();
-                    dbConnection.Insert(title, image);
-                    
+                    var redditPost = new Reddit
+                    {
+                        Title = item.data.title,
+                        Image = item.data.url
+                    };
+
+                    db.CheckDbForDuplicates(redditPost, Title, Image);
+                    getRedditPosts.Add(redditPost);
                 }
+
+                
             }          
         } 
     }

@@ -120,6 +120,7 @@
   <ItemGroup>
     <Compile Include="CustomExceptions.cs" />
     <Compile Include="DbConnection.cs" />
+    <Compile Include="Domain.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reddit\Json\Child.cs" />

@@ -51,7 +51,6 @@ namespace TrumpTweeter
                         cmd.Parameters.Add("@post_title", MySqlDbType.String).Value = title.Replace("'", "");
                         cmd.Parameters.Add("@image_url", MySqlDbType.String).Value = image;
                         cmd.Parameters.Add("@post_date", MySqlDbType.Date).Value = DateTime.Now;
-                        //cmd.Parameters.Add("@has_been_posted", MySqlDbType.Int32).Value = 0;
                         cmd.ExecuteNonQuery();
                     }
                 }
@@ -153,6 +152,34 @@ namespace TrumpTweeter
                 {
                     cmd.Parameters.Add("@image_url", MySqlDbType.String).Value = image;
                     cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void CheckDbForDuplicates(Reddit redditPost, string title, string image)
+        {
+            using (connection = new MySqlConnection(connectionString))
+            {
+                string matchTitleAndImage = "SELECT Count(*) FROM imageurls WHERE post_title LIKE @title AND image_url LIKE @image";
+
+                // List of reddit posts not in db
+                var postsNotInDb = new List<Reddit>();
+
+                using (var cmd = new MySqlCommand(matchTitleAndImage, connection))
+                {
+                    connection.Open();
+
+                    cmd.Parameters.Add("@title", MySqlDbType.String).Value = title;
+                    cmd.Parameters.Add("@image", MySqlDbType.String).Value = image;
+
+                    var rowsAffected = cmd.ExecuteScalar();
+                    if (Convert.ToInt32(rowsAffected) == 0)
+                    {
+                        Console.WriteLine("==== NEW POST ====");
+                        Console.WriteLine(title + " " + image);
+                        Console.WriteLine();
+                        Insert(title, image);
+                    }
                 }
             }
         }
